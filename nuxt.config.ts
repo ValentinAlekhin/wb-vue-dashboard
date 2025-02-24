@@ -1,5 +1,6 @@
 import { defineNuxtConfig } from 'nuxt/config'
 
+// eslint-disable-next-line node/prefer-global/process
 const { NUXT_PUBLIC_MQTT_BROKER } = process.env
 
 console.table({
@@ -13,6 +14,23 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       mqttBroker: '',
+    },
+  },
+
+  app: {
+    head: {
+      title: 'Vue WB Dashboard',
+      meta: [
+        {
+          name: 'viewport',
+          content: 'width=device-width, initial-scale=1, maximum-scale=1',
+        },
+        {
+          name: 'theme-color',
+          content: '#030712',
+        },
+      ],
+      link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     },
   },
 

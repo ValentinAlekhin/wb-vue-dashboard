@@ -1,47 +1,25 @@
-<!-- components/DeviceCard.vue -->
-<template>
-  <UCard :class="{ 'border-red-500': device.error }">
-    <template #header>
-      <div class="flex items-center justify-between">
-        <h2>{{ device.meta?.title?.en || device.name }}</h2>
-
-        <UButton :label="open ? 'Close' : 'Open'" @click="open = !open" color="gray" variant="solid" />
-      </div>
-
-
-      <p v-if="device.error" class="text-red-500 text-sm">Error: {{ device.error }}</p>
-    </template>
-    <div v-if="open" class="space-y-4">
-      <component
-          v-for="(control, name) in device.controls"
-          :key="name"
-          :is="getComponent(control.type)"
-          :control="control"
-          :value="control.value"
-          @update:value="$emit('update:control', { deviceName: device.name, controlName: name, value: $event })"
-      />
-    </div>
-
-    <div v-else class="flex items-center justify-center">
-      <span class="text-gray-700">Controls count: {{ controlsCount }}</span>
-    </div>
-  </UCard>
-</template>
-
 <script setup lang="ts">
-import type { Device } from '~/stores/devices';
+import type { Control, Device } from '~/stores/devices'
 import { useLocalStorage } from '@vueuse/core'
+import { get, set } from 'lodash-es'
 
-
-const props =  defineProps<{
-  device: Device;
-}>();
-
+const props = defineProps<{
+  device: Device
+}>()
 defineEmits<{
-  (e: 'update:control', payload: { deviceName: string; controlName: string; value: string }): void;
-}>();
+  (e: 'update:control', payload: { deviceName: string, controlName: string, value: string }): void
+}>()
 
-const open = useLocalStorage(props.device.name, false)
+const { device } = toRefs(props)
+
+const open = useLocalStorage(device.value.name, false)
+
+const controls = computed<Record<string, Control>>(() => Object.entries(device.value.controls)
+  .sort((a, b) => get(a, '[1].meta.order', 0) - get(b, '[1].meta.order', 0))
+  .reduce((acc, v) => {
+    set(acc, v[0], v[1])
+    return acc
+  }, {}))
 
 const controlComponents: Record<string, string> = {
   switch: 'SwitchControl',
@@ -52,16 +30,46 @@ const controlComponents: Record<string, string> = {
   rel_humidity: 'ValueControl',
   text: 'TextControl',
   pushbutton: 'ButtonControl',
-};
+}
 
 function getComponent(type: string) {
   const name = controlComponents[type]
   if (!name) {
-    return 'div';
+    return 'div'
   }
 
-  return resolveComponent(controlComponents[type]);
+  return resolveComponent(controlComponents[type])
 }
 
-const controlsCount = computed(() => Object.keys(props.device.controls).length)
+const controlsCount = computed(() => Object.keys(device.value.controls).length)
 </script>
+
+<template>
+  <UCard :class="{ 'border-red-500': device.error }">
+    <template #header>
+      <div class="flex items-center justify-between">
+        <h2>{{ device.meta?.title?.en || device.name }}</h2>
+
+        <UButton :label="open ? 'Close' : 'Open'" color="gray" variant="solid" @click="open = !open" />
+      </div>
+
+      <p v-if="device.error" class="text-red-500 text-sm">
+        Error: {{ device.error }}
+      </p>
+    </template>
+    <div v-if="open" class="space-y-4">
+      <component
+        :is="getComponent(control.type)"
+        v-for="(control, name) in controls"
+        :key="name"
+        :control="control"
+        :value="control.value"
+        @update:value="$emit('update:control', { deviceName: device.name, controlName: name, value: $event })"
+      />
+    </div>
+
+    <div v-else class="flex items-center justify-center">
+      <span class="text-gray-700">Controls count: {{ controlsCount }}</span>
+    </div>
+  </UCard>
+</template>
