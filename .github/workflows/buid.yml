@@ -10,7 +10,7 @@ jobs:
     name: Build and push image
     runs-on: ubuntu-latest
     steps:
-      - name: Set up QEMU
+      - name: Set up QEMU (для эмуляции ARM)
         uses: docker/setup-qemu-action@v2
 
       - name: Set up Docker Buildx
@@ -22,12 +22,14 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push
+      - name: Build and push multi-arch image (amd64 + arm64)
         uses: docker/build-push-action@v3
         with:
+          context: .
           push: true
+          platforms: linux/amd64,linux/arm64
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/wb-vue-dashboard:latest,
+            ${{ secrets.DOCKERHUB_USERNAME }}/wb-vue-dashboard:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/wb-vue-dashboard:${{ github.sha }}
           cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/wb-vue-dashboard:buildcache
           cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/wb-vue-dashboard:buildcache,mode=max
