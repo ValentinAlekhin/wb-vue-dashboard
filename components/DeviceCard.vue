@@ -29,6 +29,7 @@ const controlComponents: Record<string, string> = {
   rel_humidity: 'ValueControl',
   text: 'TextControl',
   pushbutton: 'ButtonControl',
+  rgb: 'RgbControl',
 }
 
 function getComponent(type: string) {
