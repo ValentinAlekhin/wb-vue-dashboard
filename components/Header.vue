@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useMqtt } from '~/composables/useMqtt'
-
 const { connectionStatus, mqttBroker } = useMqtt()
 
 const statusText = computed(() => {
@@ -15,10 +12,10 @@ const statusText = computed(() => {
 
 const statusColor = computed(() => {
   switch (connectionStatus.value) {
-    case 'connected': return 'green'
-    case 'reconnecting': return 'yellow'
-    case 'offline': return 'red'
-    default: return 'gray'
+    case 'connected': return 'success'
+    case 'reconnecting': return 'warning'
+    case 'offline': return 'error'
+    default: return 'neutral'
   }
 })
 

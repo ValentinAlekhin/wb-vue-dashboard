@@ -1,6 +1,4 @@
-<!-- components/controls/RangeControl.vue -->
 <script setup lang="ts">
-import type { Control } from '~/stores/devices'
 import debounce from 'lodash-es/debounce'
 
 defineProps<{
@@ -21,7 +19,7 @@ const emitValue = debounce(value => emit('update:value', String(value)), 300)
       <span>{{ control.meta.title?.en || control.name }}</span>
       <span>{{ value }}</span>
     </div>
-    <URange
+    <USlider
       :model-value="Number(value)"
       :min="control.meta.min ?? 0"
       :max="control.meta.max ?? 255"

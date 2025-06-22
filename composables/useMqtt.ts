@@ -1,4 +1,3 @@
-// composables/useMqtt.ts
 import type { MqttClient } from 'mqtt'
 import mqtt from 'mqtt'
 import { nanoid } from 'nanoid'

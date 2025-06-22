@@ -1,7 +1,4 @@
-<!-- pages/index.vue -->
 <script setup lang="ts">
-import { useDevicesStore } from '~/stores/devices'
-
 const { publishControl, init } = useMqtt()
 
 const store = useDevicesStore()

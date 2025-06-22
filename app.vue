@@ -2,11 +2,13 @@
 </script>
 
 <template>
-  <ClientOnly>
-    <main>
-      <NuxtLayout>
-        <NuxtPage />
-      </NuxtLayout>
-    </main>
-  </ClientOnly>
+  <UApp>
+    <ClientOnly>
+      <main>
+        <NuxtLayout>
+          <NuxtPage />
+        </NuxtLayout>
+      </main>
+    </ClientOnly>
+  </UApp>
 </template>

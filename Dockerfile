@@ -1,7 +1,7 @@
 ARG NODE_VERSION=22.14.0
 
 # Create build stage
-FROM node:${NODE_VERSION}-slim AS build
+FROM node:${NODE_VERSION}-alpine AS build
 
 # Enable pnpm
 ENV PNPM_HOME="/pnpm"
@@ -25,7 +25,7 @@ COPY . .
 RUN pnpm run build
 
 # Create a new stage for the production image
-FROM node:${NODE_VERSION}-slim
+FROM node:${NODE_VERSION}-alpine
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -34,7 +34,7 @@ WORKDIR /app
 COPY --from=build /app/.output .
 
 # Define environment variables
-ENV HOST=0.0.0.0 NODE_ENV=production
+ENV HOST=0.0.0.0
 ENV NODE_ENV=production
 
 # Expose the port the application will run on

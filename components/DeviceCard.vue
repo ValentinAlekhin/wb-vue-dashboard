@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { Control, Device } from '~/stores/devices'
 import { useLocalStorage } from '@vueuse/core'
 import { get, set } from 'lodash-es'
 
@@ -50,7 +49,7 @@ const controlsCount = computed(() => Object.keys(device.value.controls).length)
       <div class="flex items-center justify-between">
         <h2>{{ device.meta?.title?.en || device.name }}</h2>
 
-        <UButton :label="open ? 'Close' : 'Open'" color="gray" variant="solid" @click="open = !open" />
+        <UButton :label="open ? 'Close' : 'Open'" color="neutral" variant="soft" @click="open = !open" />
       </div>
 
       <p v-if="device.error" class="text-red-500 text-sm">

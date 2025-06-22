@@ -1,7 +1,4 @@
-<!-- components/controls/ControlWrapper.vue -->
 <script setup lang="ts">
-import type { Control } from '~/stores/devices'
-
 const props = defineProps<{
   control: Control
 }>()
@@ -30,6 +27,6 @@ const errorMessage = computed(() => {
       {{ errorMessage }}
     </p>
 
-    <UDivider class="mt-2" />
+    <USeparator class="mt-2" />
   </div>
 </template>

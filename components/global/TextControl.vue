@@ -1,7 +1,4 @@
-<!-- components/controls/TextControl.vue -->
 <script setup lang="ts">
-import type { Control } from '~/stores/devices'
-
 defineProps<{
   control: Control
   value: string | number
