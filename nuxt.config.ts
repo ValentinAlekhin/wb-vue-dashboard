@@ -52,4 +52,10 @@ export default defineNuxtConfig({
     strict: true,
     shim: false,
   },
+
+  icon: {
+    serverBundle: {
+      collections: ['lucide'],
+    },
+  },
 })

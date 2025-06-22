@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import { useHeaderSearch } from '~/composables/useHeaderSearch'
+
 const { connectionStatus, mqttBroker } = useMqtt()
+const { name, setName } = useHeaderSearch()
 
 const statusText = computed(() => {
   switch (connectionStatus.value) {
@@ -29,6 +32,14 @@ const statusVariant = computed(() => {
     <h1 class="text-lg font-semibold">
       MQTT Devices
     </h1>
+
+    <UInput
+      :model-value="name"
+      placeholder="Enter device name"
+      icon="i-lucide-search"
+      @update:model-value="setName"
+    />
+
     <div class="flex items-center space-x-2">
       <span class="text-sm">{{ mqttBroker }}</span>
       <UBadge :color="statusColor" :variant="statusVariant">
