@@ -13,7 +13,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      mqttBroker: '',
+      mqttBroker: NUXT_PUBLIC_MQTT_BROKER,
     },
   },
 
@@ -51,11 +51,5 @@ export default defineNuxtConfig({
   typescript: {
     strict: true,
     shim: false,
-  },
-
-  icon: {
-    serverBundle: {
-      collections: ['lucide'],
-    },
   },
 })
