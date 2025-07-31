@@ -13,7 +13,7 @@ export interface Client {
 export const useClientsStore = defineStore(
   'mqtt',
   () => {
-    const connections = ref<Client[]>([{ id: 'sdf', name: 'sadfsdf', url: 'sdfsadfsadfsadfsdf', password: '' }])
+    const connections = ref<Client[]>([])
 
     // Добавление нового подключения
     const addClient = (connection: Omit<Client, 'id'>) => {
