@@ -19,7 +19,7 @@ importers:
         version: 1.10.3(magicast@0.3.5)(vite@6.3.5(@types/node@22.13.5)(jiti@2.4.2)(lightningcss@1.30.1)(terser@5.39.0)(yaml@2.8.0))(vue@3.5.18(typescript@5.7.3))
       '@nuxt/ui':
         specifier: 3.3.0
-        version: 3.3.0(@babel/parser@7.28.0)(@netlify/blobs@9.1.2)(change-case@5.4.4)(db0@0.3.2)(embla-carousel@8.6.0)(ioredis@5.6.1)(jwt-decode@4.0.0)(magicast@0.3.5)(typescript@5.7.3)(vite@6.3.5(@types/node@22.13.5)(jiti@2.4.2)(lightningcss@1.30.1)(terser@5.39.0)(yaml@2.8.0))(vue-router@4.5.1(vue@3.5.18(typescript@5.7.3)))(vue@3.5.18(typescript@5.7.3))(zod@3.25.67)
+        version: 3.3.0(@babel/parser@7.28.0)(@netlify/blobs@9.1.2)(change-case@5.4.4)(db0@0.3.2)(embla-carousel@8.6.0)(ioredis@5.6.1)(jwt-decode@4.0.0)(magicast@0.3.5)(typescript@5.7.3)(valibot@1.1.0(typescript@5.7.3))(vite@6.3.5(@types/node@22.13.5)(jiti@2.4.2)(lightningcss@1.30.1)(terser@5.39.0)(yaml@2.8.0))(vue-router@4.5.1(vue@3.5.18(typescript@5.7.3)))(vue@3.5.18(typescript@5.7.3))(zod@3.25.67)
       '@pinia/nuxt':
         specifier: 0.10.1
         version: 0.10.1(magicast@0.3.5)(pinia@3.0.3(typescript@5.7.3)(vue@3.5.18(typescript@5.7.3)))
@@ -53,9 +53,15 @@ importers:
       pinia:
         specifier: ^3.0.3
         version: 3.0.3(typescript@5.7.3)(vue@3.5.18(typescript@5.7.3))
+      pinia-plugin-persistedstate:
+        specifier: ^4.4.1
+        version: 4.4.1(@nuxt/kit@4.0.2(magicast@0.3.5))(@pinia/nuxt@0.10.1(magicast@0.3.5)(pinia@3.0.3(typescript@5.7.3)(vue@3.5.18(typescript@5.7.3))))(pinia@3.0.3(typescript@5.7.3)(vue@3.5.18(typescript@5.7.3)))
       tailwindcss:
         specifier: ^4.1.10
         version: 4.1.10
+      valibot:
+        specifier: ^1.1.0
+        version: 1.1.0(typescript@5.7.3)
       vue:
         specifier: latest
         version: 3.5.18(typescript@5.7.3)
@@ -2409,6 +2415,9 @@ packages:
   deep-is@0.1.4:
     resolution: {integrity: sha512-oIPzksmTg4/MriiaYGO+okXDT7ztn/w3Eptv/+gSIdMdKsJo0u4CfYNFJPy+4SKMuCqGw2wxnA+URMg3t8a/bQ==}
 
+  deep-pick-omit@1.2.1:
+    resolution: {integrity: sha512-2J6Kc/m3irCeqVG42T+SaUMesaK7oGWaedGnQQK/+O0gYc+2SP5bKh/KKTE7d7SJ+GCA9UUE1GRzh6oDe0EnGw==}
+
   deepmerge@4.3.1:
     resolution: {integrity: sha512-3sUqbMEc77XqpdNO7FRyRog+eW3ph+GYCbj+rK+uYyRMuwsVy0rMiVtPn+QJlKFvWP/1PYpapqYn0Me2knFn+A==}
     engines: {node: '>=0.10.0'}
@@ -4180,6 +4189,20 @@ packages:
     resolution: {integrity: sha512-5gTmgEY/sqK6gFXLIsQNH19lWb4ebPDLA4SdLP7dsWkIXHWlG66oPuVvXSGFPppYZz8ZDZq0dYYrbHfBCVUb1Q==}
     engines: {node: '>=12'}
 
+  pinia-plugin-persistedstate@4.4.1:
+    resolution: {integrity: sha512-lmuMPpXla2zJKjxEq34e1E9P9jxkWEhcVwwioCCE0izG45kkTOvQfCzvwhW3i38cvnaWC7T1eRdkd15Re59ldw==}
+    peerDependencies:
+      '@nuxt/kit': '>=3.0.0'
+      '@pinia/nuxt': '>=0.10.0'
+      pinia: '>=3.0.0'
+    peerDependenciesMeta:
+      '@nuxt/kit':
+        optional: true
+      '@pinia/nuxt':
+        optional: true
+      pinia:
+        optional: true
+
   pinia@3.0.3:
     resolution: {integrity: sha512-ttXO/InUULUXkMHpTdp9Fj4hLpD/2AoJdmAbAeW2yu1iy1k+pkFekQXw5VpC0/5p51IOR/jDaDRfRWRnMMsGOA==}
     peerDependencies:
@@ -5176,6 +5199,14 @@ packages:
   uuid@11.1.0:
     resolution: {integrity: sha512-0/A9rDy9P7cJ+8w1c9WD9V//9Wj15Ce2MPz8Ri6032usz+NfePxx5AcN3bN+r6ZL6jEo066/yNYB3tn4pQEx+A==}
     hasBin: true
+
+  valibot@1.1.0:
+    resolution: {integrity: sha512-Nk8lX30Qhu+9txPYTwM0cFlWLdPFsFr6LblzqIySfbZph9+BFsAHsNvHOymEviUepeIW6KFHzpX8TKhbptBXXw==}
+    peerDependencies:
+      typescript: '>=5'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
 
   validate-npm-package-license@3.0.4:
     resolution: {integrity: sha512-DpKm2Ui/xN7/HQKCtpZxoRWBhZ9Z0kqtygG8XCgNQ8ZlDnxuQmWhj566j8fN4Cu3/JmbhsDo7fcAJq4s9h27Ew==}
@@ -6724,7 +6755,7 @@ snapshots:
     transitivePeerDependencies:
       - magicast
 
-  '@nuxt/ui@3.3.0(@babel/parser@7.28.0)(@netlify/blobs@9.1.2)(change-case@5.4.4)(db0@0.3.2)(embla-carousel@8.6.0)(ioredis@5.6.1)(jwt-decode@4.0.0)(magicast@0.3.5)(typescript@5.7.3)(vite@6.3.5(@types/node@22.13.5)(jiti@2.4.2)(lightningcss@1.30.1)(terser@5.39.0)(yaml@2.8.0))(vue-router@4.5.1(vue@3.5.18(typescript@5.7.3)))(vue@3.5.18(typescript@5.7.3))(zod@3.25.67)':
+  '@nuxt/ui@3.3.0(@babel/parser@7.28.0)(@netlify/blobs@9.1.2)(change-case@5.4.4)(db0@0.3.2)(embla-carousel@8.6.0)(ioredis@5.6.1)(jwt-decode@4.0.0)(magicast@0.3.5)(typescript@5.7.3)(valibot@1.1.0(typescript@5.7.3))(vite@6.3.5(@types/node@22.13.5)(jiti@2.4.2)(lightningcss@1.30.1)(terser@5.39.0)(yaml@2.8.0))(vue-router@4.5.1(vue@3.5.18(typescript@5.7.3)))(vue@3.5.18(typescript@5.7.3))(zod@3.25.67)':
     dependencies:
       '@iconify/vue': 5.0.0(vue@3.5.18(typescript@5.7.3))
       '@internationalized/date': 3.8.2
@@ -6770,6 +6801,7 @@ snapshots:
       vaul-vue: 0.4.1(reka-ui@2.3.2(typescript@5.7.3)(vue@3.5.18(typescript@5.7.3)))(vue@3.5.18(typescript@5.7.3))
       vue-component-type-helpers: 3.0.4
     optionalDependencies:
+      valibot: 1.1.0(typescript@5.7.3)
       vue-router: 4.5.1(vue@3.5.18(typescript@5.7.3))
       zod: 3.25.67
     transitivePeerDependencies:
@@ -8245,6 +8277,8 @@ snapshots:
       character-entities: 2.0.2
 
   deep-is@0.1.4: {}
+
+  deep-pick-omit@1.2.1: {}
 
   deepmerge@4.3.1: {}
 
@@ -10464,6 +10498,16 @@ snapshots:
 
   picomatch@4.0.3: {}
 
+  pinia-plugin-persistedstate@4.4.1(@nuxt/kit@4.0.2(magicast@0.3.5))(@pinia/nuxt@0.10.1(magicast@0.3.5)(pinia@3.0.3(typescript@5.7.3)(vue@3.5.18(typescript@5.7.3))))(pinia@3.0.3(typescript@5.7.3)(vue@3.5.18(typescript@5.7.3))):
+    dependencies:
+      deep-pick-omit: 1.2.1
+      defu: 6.1.4
+      destr: 2.0.5
+    optionalDependencies:
+      '@nuxt/kit': 4.0.2(magicast@0.3.5)
+      '@pinia/nuxt': 0.10.1(magicast@0.3.5)(pinia@3.0.3(typescript@5.7.3)(vue@3.5.18(typescript@5.7.3)))
+      pinia: 3.0.3(typescript@5.7.3)(vue@3.5.18(typescript@5.7.3))
+
   pinia@3.0.3(typescript@5.7.3)(vue@3.5.18(typescript@5.7.3)):
     dependencies:
       '@vue/devtools-api': 7.7.2
@@ -10728,7 +10772,7 @@ snapshots:
   rc9@2.1.2:
     dependencies:
       defu: 6.1.4
-      destr: 2.0.3
+      destr: 2.0.5
 
   read-package-up@11.0.0:
     dependencies:
@@ -11534,6 +11578,10 @@ snapshots:
   util-deprecate@1.0.2: {}
 
   uuid@11.1.0: {}
+
+  valibot@1.1.0(typescript@5.7.3):
+    optionalDependencies:
+      typescript: 5.7.3
 
   validate-npm-package-license@3.0.4:
     dependencies:

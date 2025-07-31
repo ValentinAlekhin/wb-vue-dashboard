@@ -1,21 +1,8 @@
 import { defineNuxtConfig } from 'nuxt/config'
 
-// eslint-disable-next-line node/prefer-global/process
-const { NUXT_PUBLIC_MQTT_BROKER } = process.env
-
-console.table({
-  NUXT_PUBLIC_MQTT_BROKER,
-})
-
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   ssr: true,
-
-  runtimeConfig: {
-    public: {
-      mqttBroker: NUXT_PUBLIC_MQTT_BROKER,
-    },
-  },
 
   css: ['~/assets/css/main.css'],
 
@@ -43,6 +30,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@vueuse/nuxt',
     '@nuxt/icon',
+    'pinia-plugin-persistedstate',
   ],
   imports: {
     dirs: ['stores/*', 'constants/*'],

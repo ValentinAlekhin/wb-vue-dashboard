@@ -4,7 +4,7 @@
 <template>
   <UApp>
     <ClientOnly>
-      <main>
+      <main class="h-full">
         <NuxtLayout>
           <NuxtPage />
         </NuxtLayout>
@@ -12,3 +12,9 @@
     </ClientOnly>
   </UApp>
 </template>
+
+<style lang="css">
+html, body, #__nuxt {
+  height: 100%;
+}
+</style>

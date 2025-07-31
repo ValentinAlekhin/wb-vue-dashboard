@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <div class="pt-14">
+  <div class="pt-14 h-full">
     <Header />
     <slot />
   </div>

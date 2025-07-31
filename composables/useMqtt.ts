@@ -56,8 +56,6 @@ function handleControlValue(payload: string, deviceName: string, controlName: st
 }
 
 export const useMqtt = createSharedComposable(() => {
-  const { public: { mqttBroker } } = useRuntimeConfig()
-
   const connected = ref(false)
   const connectionStatus = ref <'connected' | 'reconnecting' | 'offline'> ('offline')
   const store = useDevicesStore()
@@ -92,9 +90,11 @@ export const useMqtt = createSharedComposable(() => {
     },
   ]
 
-  function init() {
-    client.value = mqtt.connect(mqttBroker, {
+  function init({ url, username, password }: { url: string, username?: string, password?: string }) {
+    client.value = mqtt.connect(url, {
       clientId: `wb_vue_dashboard_${nanoid()}`,
+      username,
+      password,
     })
 
     // Обновление статуса на основе событий MQTT
@@ -140,6 +140,13 @@ export const useMqtt = createSharedComposable(() => {
     })
   }
 
+  function disconnect() {
+    client.value?.end()
+    client.value = null
+    connected.value = false
+    connectionStatus.value = 'offline'
+  }
+
   function subscribeToTopics() {
     const topics = [
       '/devices/+/meta',
@@ -160,5 +167,5 @@ export const useMqtt = createSharedComposable(() => {
     client.value?.publish(`/devices/${deviceName}/controls/${controlName}/on`, String(value), { retain: false, qos: 1 })
   }
 
-  return { client, publishControl, init, connectionStatus, mqttBroker }
+  return { client, publishControl, init, disconnect, connectionStatus }
 })

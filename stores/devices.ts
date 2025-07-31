@@ -83,5 +83,10 @@ export const useDevicesStore = defineStore('devices', () => {
     }
   }
 
-  return { devices, addDevice, updateControl, setDeviceError, setControlError, removeDevice, removeControl }
+  function reset() {
+    devices.value = {}
+    throttledUpdates.clear()
+  }
+
+  return { devices, addDevice, updateControl, setDeviceError, setControlError, removeDevice, removeControl, reset }
 })

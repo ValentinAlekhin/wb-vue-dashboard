@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useHeaderSearch } from '~/composables/useHeaderSearch'
 
-const { connectionStatus, mqttBroker } = useMqtt()
+const { connectionStatus } = useMqtt()
 const { name, setName } = useHeaderSearch()
 
 const statusText = computed(() => {
@@ -29,9 +29,11 @@ const statusVariant = computed(() => {
 
 <template>
   <header class="bg-background/75 fixed top-0 z-50 -mb-px w-full  backdrop-blur p-4 flex justify-between items-center border-b border-gray-200 dark:border-gray-800 mx-auto">
-    <h1 class="text-lg font-semibold">
-      MQTT Devices
-    </h1>
+    <NuxtLink to="/">
+      <h1 class="text-lg font-semibold">
+        MQTT Devices
+      </h1>
+    </NuxtLink>
 
     <UInput
       :model-value="name"
@@ -41,7 +43,7 @@ const statusVariant = computed(() => {
     />
 
     <div class="flex items-center space-x-2">
-      <span class="text-sm">{{ mqttBroker }}</span>
+      <span class="text-sm">{{ '' }}</span>
       <UBadge :color="statusColor" :variant="statusVariant">
         {{ statusText }}
       </UBadge>
