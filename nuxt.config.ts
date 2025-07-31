@@ -40,4 +40,11 @@ export default defineNuxtConfig({
     strict: true,
     shim: false,
   },
+
+  icon: {
+    provider: 'none',
+    clientBundle: {
+      scan: true,
+    },
+  },
 })
