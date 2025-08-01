@@ -22,23 +22,21 @@ RUN pnpm install --shamefully-hoist
 COPY . .
 
 # Build the application
-RUN pnpm run build
+RUN pnpm run generate
 
-# Create a new stage for the production image
-FROM node:${NODE_VERSION}-alpine
 
-# Set the working directory inside the container
-WORKDIR /app
+## Stage 2 — Serve static files with Nginx
+FROM nginx:alpine AS production
 
-# Copy the output from the build stage to the working directory
-COPY --from=build /app/.output .
+WORKDIR /usr/share/nginx/html
 
-# Define environment variables
-ENV HOST=0.0.0.0
-ENV NODE_ENV=production
+RUN rm -rf ./*
 
-# Expose the port the application will run on
-EXPOSE 3000
+COPY --from=build /app/.output/public .
 
-# Start the application
-CMD ["node","/app/server/index.mjs"]
+# При необходимости добавить конфигурацию
+COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]

@@ -12,7 +12,7 @@
   "dependencies": {
     "@antfu/eslint-config": "^4.3.0",
     "@iconify-json/lucide": "^1.2.51",
-    "@nuxt/icon": "^1.15.0",
+    "@nuxt/icon": "1.15.0",
     "@nuxt/ui": "3.3.0",
     "@pinia/nuxt": "0.10.1",
     "@tailwindcss/aspect-ratio": "^0.4.2",
