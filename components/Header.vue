@@ -1,8 +1,12 @@
 <script setup lang="ts">
-import { useHeaderSearch } from '~/composables/useHeaderSearch'
-
+const route = useRoute()
 const { connectionStatus } = useMqtt()
 const { name, setName } = useHeaderSearch()
+const clientsStore = useClientsStore()
+
+const id = computed(() => route.params.id as string)
+
+const client = computed(() => clientsStore.getClient(id.value))
 
 const statusText = computed(() => {
   switch (connectionStatus.value) {
@@ -35,18 +39,20 @@ const statusVariant = computed(() => {
       </h1>
     </NuxtLink>
 
-    <UInput
-      :model-value="name"
-      placeholder="Enter device name"
-      icon="i-lucide-search"
-      @update:model-value="setName"
-    />
+    <template v-if="id">
+      <UInput
+        :model-value="name"
+        placeholder="Enter device name"
+        icon="i-lucide-search"
+        @update:model-value="setName"
+      />
 
-    <div class="flex items-center space-x-2">
-      <span class="text-sm">{{ '' }}</span>
-      <UBadge :color="statusColor" :variant="statusVariant">
-        {{ statusText }}
-      </UBadge>
-    </div>
+      <div class="flex items-center space-x-2">
+        <span class="text-sm">{{ client?.name }}</span>
+        <UBadge :color="statusColor" :variant="statusVariant">
+          {{ statusText }}
+        </UBadge>
+      </div>
+    </template>
   </header>
 </template>

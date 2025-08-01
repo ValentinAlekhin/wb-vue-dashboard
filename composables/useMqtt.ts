@@ -19,7 +19,11 @@ function handleDeviceMeta(payload: string, deviceName: string) {
 }
 
 // Обработчик метаданных контролла
-function handleControlMeta(payload: string, deviceName: string, controlName: string) {
+function handleControlMeta(
+  payload: string,
+  deviceName: string,
+  controlName: string,
+) {
   const store = useDevicesStore()
   if (payload === '') {
     store.removeControl(deviceName, controlName)
@@ -42,13 +46,21 @@ function handleDeviceError(payload: string, deviceName: string) {
 }
 
 // Обработчик ошибок контролла
-function handleControlError(payload: string, deviceName: string, controlName: string) {
+function handleControlError(
+  payload: string,
+  deviceName: string,
+  controlName: string,
+) {
   const store = useDevicesStore()
   store.setControlError(deviceName, controlName, payload || null)
 }
 
 // Обработчик значений контролла
-function handleControlValue(payload: string, deviceName: string, controlName: string) {
+function handleControlValue(
+  payload: string,
+  deviceName: string,
+  controlName: string,
+) {
   const store = useDevicesStore()
   if (store.devices[deviceName].controls[controlName]) {
     store.updateControl(deviceName, controlName, payload)
@@ -56,27 +68,39 @@ function handleControlValue(payload: string, deviceName: string, controlName: st
 }
 
 export const useMqtt = createSharedComposable(() => {
+  const toast = useToast()
+
   const connected = ref(false)
-  const connectionStatus = ref <'connected' | 'reconnecting' | 'offline'> ('offline')
+  const connectionStatus = ref<'connected' | 'reconnecting' | 'offline'>(
+    'offline',
+  )
   const store = useDevicesStore()
   const client = ref<MqttClient | null>(null)
 
   // Определение маршрутов с регулярными выражениями
   const routes: Array<{
     pattern: RegExp
-    handler: (topic: string, payload: string, deviceName: string, controlName?: string) => void
+    handler: (
+      topic: string,
+      payload: string,
+      deviceName: string,
+      controlName?: string
+    ) => void
   }> = [
     {
       pattern: /^\/devices\/([^/]+)\/meta$/,
-      handler: (topic, payload, deviceName) => handleDeviceMeta(payload, deviceName),
+      handler: (topic, payload, deviceName) =>
+        handleDeviceMeta(payload, deviceName),
     },
     {
       pattern: /^\/devices\/([^/]+)\/controls\/([^/]+)\/meta$/,
-      handler: (topic, payload, deviceName, controlName) => handleControlMeta(payload, deviceName, controlName!),
+      handler: (topic, payload, deviceName, controlName) =>
+        handleControlMeta(payload, deviceName, controlName!),
     },
     {
       pattern: /^\/devices\/([^/]+)\/meta\/error$/,
-      handler: (topic, payload, deviceName) => handleDeviceError(payload, deviceName),
+      handler: (topic, payload, deviceName) =>
+        handleDeviceError(payload, deviceName),
     },
     {
       pattern: /^\/devices\/([^/]+)\/controls\/([^/]+)\/meta\/error$/,
@@ -90,7 +114,15 @@ export const useMqtt = createSharedComposable(() => {
     },
   ]
 
-  function init({ url, username, password }: { url: string, username?: string, password?: string }) {
+  function init({
+    url,
+    username,
+    password,
+  }: {
+    url: string
+    username?: string
+    password?: string
+  }) {
     client.value = mqtt.connect(url, {
       clientId: `wb_vue_dashboard_${nanoid()}`,
       username,
@@ -104,12 +136,18 @@ export const useMqtt = createSharedComposable(() => {
       }
       connected.value = true
       connectionStatus.value = 'connected'
+
+      toast.add({ title: `Connected`, color: 'success' })
     })
     client.value.on('reconnect', () => {
       connectionStatus.value = 'reconnecting'
+
+      toast.add({ title: `Reconnecting`, color: 'warning' })
     })
     client.value.on('offline', () => {
       connectionStatus.value = 'offline'
+
+      toast.add({ title: `Offline`, color: 'error' })
     })
     client.value.on('close', () => {
       connectionStatus.value = 'offline'
@@ -163,8 +201,16 @@ export const useMqtt = createSharedComposable(() => {
     })
   }
 
-  function publishControl(deviceName: string, controlName: string, value: string | number) {
-    client.value?.publish(`/devices/${deviceName}/controls/${controlName}/on`, String(value), { retain: false, qos: 1 })
+  function publishControl(
+    deviceName: string,
+    controlName: string,
+    value: string | number,
+  ) {
+    client.value?.publish(
+      `/devices/${deviceName}/controls/${controlName}/on`,
+      String(value),
+      { retain: false, qos: 1 },
+    )
   }
 
   return { client, publishControl, init, disconnect, connectionStatus }
